@@ -2,6 +2,7 @@ import calendar
 import hashlib
 import json
 import os
+import random
 import socket
 import ssl
 import time
@@ -169,16 +170,157 @@ def _active_companies(companies: list[Company]) -> list[Company]:
     return active
 
 
+def _company_is_bank(company: Company) -> bool:
+    value = getattr(company, "is_bank", "")
+    if isinstance(value, bool):
+        return value
+    normalized = str(value).strip().lower()
+    return normalized in {"1", "true", "yes", "y"}
+
+
+def _gn_company_candidates(companies: list[Company]) -> list[Company]:
+    candidates: list[Company] = []
+    for company in _active_companies(companies):
+        country = company.country.strip().upper()
+        if country != "IT":
+            continue
+        if _company_is_bank(company):
+            continue
+        candidates.append(company)
+    return candidates
+
+
+def _gn_company_feeds_cap() -> int:
+    value = os.getenv("GN_COMPANY_FEEDS_CAP")
+    if not value:
+        return 50
+    try:
+        cap = int(value)
+    except ValueError:
+        return 50
+    return max(cap, 0)
+
+
+def _gn_company_feeds_mode() -> str:
+    value = os.getenv("GN_COMPANY_FEEDS_MODE", "top_revenue").strip().lower()
+    if value in {"top_revenue", "random", "rolling"}:
+        return value
+    return "top_revenue"
+
+
+def _gn_company_feeds_seed() -> str:
+    return os.getenv("GN_COMPANY_FEEDS_SEED", "").strip()
+
+
+def _parse_revenue_value(value: str) -> float:
+    if not value:
+        return 0.0
+    cleaned = value.replace(",", "").strip()
+    try:
+        return float(cleaned)
+    except ValueError:
+        return 0.0
+
+
+def _seed_to_int(seed: str) -> int:
+    if not seed:
+        return 0
+    value = seed.strip()
+    if not value:
+        return 0
+    if len(value) >= 10:
+        try:
+            parsed = datetime.fromisoformat(value[:10])
+            return parsed.date().toordinal()
+        except ValueError:
+            pass
+    try:
+        return int(value)
+    except ValueError:
+        pass
+    digest = hashlib.sha256(value.encode("utf-8")).hexdigest()
+    return int(digest[:16], 16)
+
+
+def _rolling_window(
+    items: list[Company],
+    cap: int,
+    start: int,
+) -> list[Company]:
+    if cap >= len(items):
+        return items
+    end = start + cap
+    if end <= len(items):
+        return items[start:end]
+    return items[start:] + items[: end - len(items)]
+
+
+def _select_top_revenue(
+    companies: list[Company],
+    cap: int,
+) -> list[Company]:
+    ordered = sorted(companies, key=lambda company: company.company_id or "")
+    ordered = sorted(
+        ordered,
+        key=lambda company: _parse_revenue_value(company.revenue_eur),
+        reverse=True,
+    )
+    return ordered[:cap]
+
+
+def _select_random(
+    companies: list[Company],
+    cap: int,
+    seed: str,
+) -> list[Company]:
+    ordered = sorted(companies, key=lambda company: company.company_id or "")
+    rng = random.Random(_seed_to_int(seed))
+    rng.shuffle(ordered)
+    return ordered[:cap]
+
+
+def _select_rolling(
+    companies: list[Company],
+    cap: int,
+    seed: str,
+) -> list[Company]:
+    ordered = sorted(companies, key=lambda company: company.company_id or "")
+    if not ordered:
+        return []
+    if cap >= len(ordered):
+        return ordered
+    start = _seed_to_int(seed) % len(ordered)
+    return _rolling_window(ordered, cap, start)
+
+
+def _select_gn_companies(
+    companies: list[Company],
+    cap: int,
+    mode: str,
+    seed: str,
+) -> list[Company]:
+    if cap <= 0 or not companies:
+        return []
+    if mode == "random":
+        return _select_random(companies, cap, seed)
+    if mode == "rolling":
+        return _select_rolling(companies, cap, seed)
+    return _select_top_revenue(companies, cap)
+
+
 def _load_gn_company(
     provider: Provider,
     companies: list[Company] | None,
 ) -> list[NewsItem]:
     if companies is None:
         companies = _load_companies_from_csv(_companies_csv_path())
-    companies = _active_companies(companies)
-
-    cap = 50
-    companies = companies[:cap]
+    candidates = _gn_company_candidates(companies)
+    cap = _gn_company_feeds_cap()
+    mode = _gn_company_feeds_mode()
+    seed = _gn_company_feeds_seed()
+    companies = _select_gn_companies(candidates, cap, mode, seed)
+    seed_label = seed if seed else "n/a"
+    skipped = max(len(candidates) - len(companies), 0)
     if _is_gn_provider(provider) and not _rss_diagnostics_enabled():
         print(f"GN SSL CA bundle: {_ca_bundle_path()}")
     if _rss_diagnostics_enabled():
@@ -189,7 +331,11 @@ def _load_gn_company(
                 sample_url = _build_gn_company_url(provider.base_url, query)
                 break
         _fetch_rss_with_diagnostics(provider, sample_url)
-    print(f"GN company feeds processed: {len(companies)} (cap={cap})")
+    print(
+        "GN company feeds processed: "
+        f"{len(companies)} (cap={cap} mode={mode} seed={seed_label})"
+    )
+    print(f"GN company feeds skipped: {skipped}")
 
     items: list[NewsItem] = []
     for idx, company in enumerate(companies):

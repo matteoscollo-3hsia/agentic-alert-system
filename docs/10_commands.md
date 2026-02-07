@@ -30,3 +30,7 @@ Per scheduling locale vedi `docs/30_scheduler_local.md`.
 5. Nota schedule: GitHub usa UTC. Il workflow schedula `0 5 * * *` e `0 6 * * *` e salta i run fuori dalle 07:00 Europe/Rome.
 6. Validazione E2E manuale: vedi `docs/40_actions_e2e_validation.md`.
 7. Default live: Actions usa provider live; `Local RSS Snapshot` è solo test/offline.
+GN feeds (live):
+`GN_COMPANY_FEEDS_CAP`: max aziende per GN Company feeds (default Actions `200`).
+`GN_COMPANY_FEEDS_MODE`: `top_revenue` | `random` | `rolling`.
+`GN_COMPANY_FEEDS_SEED`: seed giornaliero per rotazione deterministica.

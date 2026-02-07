@@ -21,6 +21,8 @@ jobs:
       ALERTS_ENABLED: "true"
       ALERT_CHANNEL: "slack"
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      GN_COMPANY_FEEDS_CAP: "200"
+      GN_COMPANY_FEEDS_MODE: "top_revenue"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,6 +37,42 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
+
+      - name: Select providers CSV and GN seed
+        run: |
+          if [ -f data_private/providers.csv ]; then
+            echo "PROVIDERS_CSV=data_private/providers.csv" >> "$GITHUB_ENV"
+          else
+            echo "PROVIDERS_CSV=data/providers.csv" >> "$GITHUB_ENV"
+          fi
+          echo "GN_COMPANY_FEEDS_SEED=$(TZ=Europe/Rome date +%Y-%m-%d)" >> "$GITHUB_ENV"
+
+      - name: Guard against Local RSS Snapshot in Actions
+        run: |
+          python - <<'PY'
+          import csv
+          import os
+          import sys
+
+          path = os.getenv("PROVIDERS_CSV", "data/providers.csv")
+          try:
+            with open(path, newline="", encoding="utf-8") as handle:
+              reader = csv.DictReader(handle)
+              for row in reader:
+                provider_id = (row.get("provider_id") or "").strip().lower()
+                name = (row.get("name") or "").strip().lower()
+                if provider_id == "rss_snapshot" or name == "local rss snapshot":
+                  enabled = (row.get("enabled") or "").strip().lower()
+                  if enabled in {"1", "true", "yes", "y", "on"}:
+                    print(
+                      f"ERROR: Local RSS Snapshot is enabled in {path}. "
+                      "Actions must run live providers only."
+                    )
+                    sys.exit(1)
+          except FileNotFoundError:
+            print(f"ERROR: Providers CSV not found: {path}")
+            sys.exit(1)
+          PY
 
       - name: Prepare cache dir
         run: mkdir -p "${UV_CACHE_DIR}"

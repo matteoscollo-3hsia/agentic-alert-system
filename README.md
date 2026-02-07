@@ -59,6 +59,13 @@ uv run pytest
 ## Commands
 Vedi `docs/10_commands.md`.
 
+### GitHub Actions / Daily Pipeline
+**Google News company feeds sampling (live mode)**
+- `GN_COMPANY_FEEDS_CAP`: limite aziende (in Actions default `200`).
+- `GN_COMPANY_FEEDS_MODE`: `top_revenue` | `random` | `rolling`.
+- `GN_COMPANY_FEEDS_SEED`: seed giornaliero per rotazione deterministica.
+Serve per scalare oltre ~25k aziende: cap + rotazione giornaliera.
+
 Per attivare o disattivare l'RSS, modifica la colonna `enabled` in `data/providers.csv`
 per i provider con `type=rss`.
 In ambienti senza rete, imposta `base_url` su `file://data/rss_snapshots/sample.xml`.

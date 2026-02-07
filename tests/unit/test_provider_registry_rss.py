@@ -153,6 +153,7 @@ def test_fetch_news_gn_company_builds_query(monkeypatch) -> None:
             "name": "Alpha Energia",
             "aliases": "Alpha Energia S.p.A.;Alpha Energia Italia",
             "website_domain": "alphaenergia.it",
+            "country": "IT",
             "status": "active",
         }
     ]
