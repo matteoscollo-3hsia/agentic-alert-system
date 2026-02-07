@@ -28,6 +28,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Dataset check (companies)
+        run: |
+          ls -lh data/companies.csv
+          head -n 3 data/companies.csv
+          wc -l data/companies.csv
+          rows=$(wc -l < data/companies.csv)
+          if [ "$rows" -lt 1000 ]; then
+            echo "ERROR: data/companies.csv looks like a sample (too few rows). Commit the Orbis dataset to data/companies.csv on main."
+            exit 1
+          fi
+
       - name: Ensure 07:00 Europe/Rome for scheduled runs
         if: ${{ github.event_name == 'schedule' }}
         run: |
