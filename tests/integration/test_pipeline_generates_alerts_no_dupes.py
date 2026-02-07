@@ -8,7 +8,7 @@ from agentic_alert.pipeline import run_daily
 def _copy_data_files(repo_root: Path, destination: Path) -> None:
     data_dir = repo_root / "data"
     files = [
-        "companies.csv",
+        "companies.sample.csv",
         "triggers.csv",
         "providers.csv",
         "articles.csv",
@@ -39,7 +39,9 @@ def test_pipeline_generates_alerts_no_dupes(
         encoding="utf-8",
     )
 
-    monkeypatch.setenv("COMPANIES_CSV", str(tmp_path / "companies.csv"))
+    monkeypatch.setenv(
+        "COMPANIES_CSV", str(tmp_path / "companies.sample.csv")
+    )
     monkeypatch.setenv("TRIGGERS_CSV", str(tmp_path / "triggers.csv"))
     monkeypatch.setenv("PROVIDERS_CSV", str(tmp_path / "providers.csv"))
     monkeypatch.setenv("ARTICLES_CSV", str(tmp_path / "articles.csv"))
@@ -51,7 +53,7 @@ def test_pipeline_generates_alerts_no_dupes(
 
     run_daily()
     output = capsys.readouterr().out
-    expected_path = str((tmp_path / "companies.csv").resolve())
+    expected_path = str((tmp_path / "companies.sample.csv").resolve())
     assert f"Using companies_csv: {expected_path}" in output
     first_count = _count_alert_rows(tmp_path / "alerts.csv")
 

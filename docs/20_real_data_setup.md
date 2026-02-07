@@ -1,6 +1,7 @@
 # Real Data Setup (Template)
 
 Questo documento spiega come preparare file locali con dati reali senza committarli.
+Nota: il dataset Orbis e` gia` committato in `data/companies.csv`; `data_private/` resta opzionale.
 
 ## 1) Copiare i template in data_private/
 

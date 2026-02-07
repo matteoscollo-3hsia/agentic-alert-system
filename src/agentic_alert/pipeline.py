@@ -251,6 +251,12 @@ def _print_provenance(
         f"(override: {_is_env_override('COMPANIES_CSV')})"
     )
     print(
+        "companies_dataset: "
+        f"file={_resolved_path(config.companies_csv)} "
+        f"rows_loaded={len(companies)} "
+        f"rows_active={companies_active}"
+    )
+    print(
         f"Using triggers_csv: {_resolved_path(config.triggers_csv)} "
         f"(override: {_is_env_override('TRIGGERS_CSV')})"
     )
