@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       UV_CACHE_DIR: .cache/uv
+      COMPANIES_CSV: data/companies.csv
       ALERTS_ENABLED: "true"
       ALERT_CHANNEL: "slack"
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

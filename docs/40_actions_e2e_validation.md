@@ -7,6 +7,8 @@ Documento di validazione manuale per il workflow **Daily Pipeline** con due run 
 - Secret `SLACK_WEBHOOK_URL` presente: **[YES/NO]**
 - Workflow: **Daily Pipeline**
 - Providers: run live di default; `Local RSS Snapshot` solo test/offline.
+- Dataset aziende: Actions usa Orbis in `data/companies.csv` (rows_loaded ~25.798).
+- CI/test usano il sample deterministico in `data/companies.sample.csv`.
 
 ## 2) Procedura (UI)
 1. Apri GitHub → **Actions** → **Daily Pipeline**.
