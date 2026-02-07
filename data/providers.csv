@@ -1,0 +1,12 @@
+provider_id,name,type,base_url,enabled
+p001,EU Tech RSS,rss,https://news.eutech.example/rss,false
+p002,GlobalNews API,news_api,https://api.globalnews.example,false
+p003,IndustryInsights Dummy,site_stub,https://industryinsights.example,false
+p004,Nordic Business RSS,rss,https://nordicbiz.example/rss,false
+p005,FinanceWire API,news_api,https://api.financewire.example,false
+p006,Manufacturing Digest,rss,https://manufacturing.example/rss,false
+p007,HealthEurope,rss,https://healtheurope.example/rss,false
+p008,Logistics Monitor,dummy,https://logisticsmonitor.example,false
+p009,EnergyToday,rss,https://energytoday.example/rss,false
+p010,Regulatory Watch,site_stub,https://regwatch.example,false
+p011,Local RSS Snapshot,rss,file://data/rss_snapshots/sample.xml,true

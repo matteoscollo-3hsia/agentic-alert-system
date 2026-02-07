@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.uv/
+.env
+.env.local
+.env.*
+!.env.example
+.DS_Store
+data_private/
+logs/
+scripts/.env.local
+.cache/

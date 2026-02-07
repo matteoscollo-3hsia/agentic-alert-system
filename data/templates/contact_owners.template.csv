@@ -1,0 +1,6 @@
+owner_id,owner_name,owner_email,owner_org,owner_relationship_strength,notes
+o001,Marco Rossi,marco.rossi@example.com,Advisors SRL,strong,Primary contact
+o002,Elena Bianchi,elena.bianchi@example.com,Advisors SRL,medium,Secondary contact
+o003,David Smith,david.smith@example.com,Partner Firm,weak,Intro only
+o004,Sophie Martin,sophie.martin@example.com,Independent,medium,Healthcare focus
+o005,Anna Kovacs,anna.kovacs@example.com,Regional Advisors,weak,Baltics coverage

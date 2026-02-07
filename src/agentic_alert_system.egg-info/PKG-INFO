@@ -1,3 +1,16 @@
+Metadata-Version: 2.4
+Name: agentic-alert-system
+Version: 0.1.0
+Summary: MVP per lead generation B2B basato su trigger commerciali da fonti di notizie.
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: python-dotenv
+Requires-Dist: feedparser
+Requires-Dist: pytest
+Requires-Dist: requests
+Requires-Dist: certifi
+Requires-Dist: openpyxl
+
 # Agentic Alert System
 
 MVP per Lead Generation B2B basato su trigger commerciali rilevati da fonti di notizie.

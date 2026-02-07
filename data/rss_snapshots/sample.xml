@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Local RSS Snapshot</title>
+    <link>https://local.example.com</link>
+    <description>Snapshot offline per sanity check RSS</description>
+    <item>
+      <title>Futura Tech presenta il nuovo piano industriale 2026-2029</title>
+      <link>https://local.example.com/futura-tech-plan</link>
+      <pubDate>Thu, 06 Feb 2026 08:30:00 GMT</pubDate>
+      <description>Il piano industriale di Futura Tech S.p.A. e' su futuratech.it.</description>
+    </item>
+    <item>
+      <title>NordWind Energy completa acquisizione di SolarPeak</title>
+      <link>https://local.example.com/nordwind-acquisizione</link>
+      <pubDate>Wed, 05 Feb 2026 09:10:00 GMT</pubDate>
+      <description>L'acquisizione rafforza NordWind Energy e nordwind.de.</description>
+    </item>
+    <item>
+      <title>GreenLeaf Foods chiude un round di finanziamento Series A</title>
+      <link>https://local.example.com/greenleaf-funding</link>
+      <pubDate>Tue, 04 Feb 2026 07:45:00 GMT</pubDate>
+      <description>Il round di finanziamento coinvolge GreenLeaf Foods BV e greenleaf.nl.</description>
+    </item>
+    <item>
+      <title>AlpineRobotics nomina un nuovo CEO</title>
+      <link>https://local.example.com/alpine-robotics-ceo</link>
+      <pubDate>Tue, 04 Feb 2026 12:20:00 GMT</pubDate>
+      <description>Il nuovo CEO guidera AlpineRobotics con focus su alpinerobotics.de.</description>
+    </item>
+    <item>
+      <title>MedNova Health avvia partnership per telemedicina</title>
+      <link>https://local.example.com/mednova-partnership</link>
+      <pubDate>Mon, 03 Feb 2026 10:00:00 GMT</pubDate>
+      <description>La partnership strategica coinvolge mednova.fr.</description>
+    </item>
+    <item>
+      <title>Iberia Logistics annuncia ristrutturazione della rete</title>
+      <link>https://local.example.com/iberia-restructuring</link>
+      <pubDate>Mon, 03 Feb 2026 14:15:00 GMT</pubDate>
+      <description>La ristrutturazione include il portale iberialogistics.es.</description>
+    </item>
+    <item>
+      <title>AtlasFintech apre un nuovo stabilimento di data center</title>
+      <link>https://local.example.com/atlasfintech-plant</link>
+      <pubDate>Sun, 02 Feb 2026 09:00:00 GMT</pubDate>
+      <description>Il nuovo stabilimento e' legato a atlasfintech.co.uk.</description>
+    </item>
+    <item>
+      <title>Luminex Materials emette profit warning per Q1</title>
+      <link>https://local.example.com/luminex-profit-warning</link>
+      <pubDate>Sun, 02 Feb 2026 11:30:00 GMT</pubDate>
+      <description>Il profit warning interessa luminex.it.</description>
+    </item>
+    <item>
+      <title>BalticCloud sotto indagine antitrust</title>
+      <link>https://local.example.com/balticcloud-antitrust</link>
+      <pubDate>Sat, 01 Feb 2026 08:55:00 GMT</pubDate>
+      <description>L'indagine antitrust riguarda balticcloud.ee.</description>
+    </item>
+    <item>
+      <title>TerraGrid Renewables apre un impianto eolico in Svezia</title>
+      <link>https://local.example.com/terragrid-plant</link>
+      <pubDate>Sat, 01 Feb 2026 16:40:00 GMT</pubDate>
+      <description>Il plant opening cita terragrid.se.</description>
+    </item>
+  </channel>
+</rss>

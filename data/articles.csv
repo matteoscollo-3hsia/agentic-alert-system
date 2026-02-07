@@ -1,0 +1,21 @@
+article_id,provider_id,source_name,title,url,published_at,content_snippet
+a001,p003,IndustryInsights Dummy,Futura Tech presenta il nuovo piano industriale 2026-2029,https://industryinsights.example/futura-tech-plan,2026-02-06T08:30:00Z,Il piano industriale di FuturaTech e' pubblicato su futuratech.it.
+a002,p003,IndustryInsights Dummy,NordWind Energy completa acquisizione di SolarPeak,https://industryinsights.example/nordwind-acquisizione,2026-02-05T09:10:00Z,L'acquisizione rafforza NordWind Energy e nordwind.de.
+a003,p003,IndustryInsights Dummy,GreenLeaf Foods chiude un round di finanziamento Series A,https://industryinsights.example/greenleaf-funding,2026-02-04T07:45:00Z,Il round di finanziamento coinvolge GreenLeaf Foods e greenleaf.nl.
+a004,p003,IndustryInsights Dummy,AlpineRobotics nomina un nuovo CEO,https://industryinsights.example/alpine-robotics-ceo,2026-02-04T12:20:00Z,Il nuovo CEO guidera AlpineRobotics con focus su alpinerobotics.de.
+a005,p003,IndustryInsights Dummy,MedNova Health avvia partnership per telemedicina,https://industryinsights.example/mednova-partnership,2026-02-03T10:00:00Z,La partnership strategica coinvolge mednova.fr.
+a006,p003,IndustryInsights Dummy,Iberia Logistics annuncia ristrutturazione della rete,https://industryinsights.example/iberia-restructuring,2026-02-03T14:15:00Z,La ristrutturazione include il portale iberialogistics.es.
+a007,p003,IndustryInsights Dummy,AtlasFintech apre un nuovo stabilimento di data center,https://industryinsights.example/atlasfintech-plant,2026-02-02T09:00:00Z,Il nuovo stabilimento e' legato a atlasfintech.co.uk.
+a008,p003,IndustryInsights Dummy,Luminex Materials emette profit warning per Q1,https://industryinsights.example/luminex-profit-warning,2026-02-02T11:30:00Z,Il profit warning interessa luminex.it.
+a009,p003,IndustryInsights Dummy,BalticCloud sotto indagine antitrust,https://industryinsights.example/balticcloud-antitrust,2026-02-01T08:55:00Z,L'indagine antitrust riguarda balticcloud.ee.
+a010,p003,IndustryInsights Dummy,TerraGrid Renewables apre un impianto eolico in Svezia,https://industryinsights.example/terragrid-plant,2026-02-01T16:40:00Z,Il plant opening cita terragrid.se.
+a011,p003,IndustryInsights Dummy,Orion Mobility presenta nuovo piano industriale 2026,https://industryinsights.example/orion-plan,2026-01-31T09:05:00Z,Il piano industriale di Orion Mobility e' su orionmobility.ch.
+a012,p003,IndustryInsights Dummy,VegaAnalytics firma accordo strategico con partner europeo,https://industryinsights.example/vega-partnership,2026-01-31T13:25:00Z,L'accordo strategico pubblicato su vega-analytics.it.
+a013,p003,IndustryInsights Dummy,Mercato cloud europeo in crescita nel 2026,https://industryinsights.example/cloud-market,2026-01-30T08:10:00Z,Report generico senza aziende specifiche.
+a014,p003,IndustryInsights Dummy,Analisi logistica: tempi di consegna migliorano,https://industryinsights.example/logistics-update,2026-01-30T12:00:00Z,Studio di settore con focus su efficienza.
+a015,p003,IndustryInsights Dummy,Investimenti in AI nel manufacturing europeo,https://industryinsights.example/ai-manufacturing,2026-01-29T07:00:00Z,Panorama di mercato senza riferimenti a brand.
+a016,p003,IndustryInsights Dummy,Nuove linee guida UE sulla trasparenza digitale,https://industryinsights.example/ue-guidelines,2026-01-29T11:45:00Z,Documento istituzionale a scopo informativo.
+a017,p003,IndustryInsights Dummy,Report trimestrale del settore energia,https://industryinsights.example/energy-report,2026-01-28T10:00:00Z,Analisi macroeconomica senza aziende.
+a018,p003,IndustryInsights Dummy,Evento annuale fintech a Londra,https://industryinsights.example/fintech-event,2026-01-28T15:10:00Z,Conferenza su innovazione e trend.
+a019,p003,IndustryInsights Dummy,Ricerca su robotica collaborativa,https://industryinsights.example/robotics-research,2026-01-27T12:00:00Z,Studio universitario su automazione.
+a020,p003,IndustryInsights Dummy,Mercato alimentare europeo: trend bio,https://industryinsights.example/food-trends,2026-01-27T09:35:00Z,Analisi macro sui consumi.

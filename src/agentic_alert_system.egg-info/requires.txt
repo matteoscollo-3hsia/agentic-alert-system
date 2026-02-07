@@ -1,0 +1,6 @@
+python-dotenv
+feedparser
+pytest
+requests
+certifi
+openpyxl

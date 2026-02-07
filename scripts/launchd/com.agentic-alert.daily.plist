@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.agentic-alert.daily</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/bash</string>
+      <string>-lc</string>
+      <string>/Users/matteoscollo/coding/agentic-alert-system/scripts/run_daily_local.sh</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+      <key>Hour</key>
+      <integer>8</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+    <key>KeepAlive</key>
+    <dict>
+      <key>NetworkState</key>
+      <true/>
+    </dict>
+    <key>WorkingDirectory</key>
+    <string>/Users/matteoscollo/coding/agentic-alert-system</string>
+    <key>StandardOutPath</key>
+    <string>/Users/matteoscollo/coding/agentic-alert-system/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/matteoscollo/coding/agentic-alert-system/logs/launchd.err.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+      <key>UV_CACHE_DIR</key>
+      <string>/Users/matteoscollo/coding/agentic-alert-system/.cache/uv</string>
+    </dict>
+  </dict>
+</plist>

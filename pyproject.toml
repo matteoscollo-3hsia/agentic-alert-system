@@ -1,0 +1,24 @@
+[project]
+name = "agentic-alert-system"
+version = "0.1.0"
+description = "MVP per lead generation B2B basato su trigger commerciali da fonti di notizie."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "python-dotenv",
+    "feedparser",
+    "pytest",
+    "requests",
+    "certifi",
+    "openpyxl",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

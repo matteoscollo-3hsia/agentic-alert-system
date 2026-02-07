@@ -1,0 +1,10 @@
+trigger_id,name,keywords,priority,description
+t001,Acquisizione,acquisizione;M&A;merger;acquired,high,Operazioni di acquisizione o fusione
+t002,Cambio CEO,nuovo CEO;CEO change;amministratore delegato;CEO,medium,Cambio del vertice aziendale
+t003,Funding,round di finanziamento;funding round;Series A;Series B,high,Nuovo round di investimento
+t004,Partnership,partnership;accordo strategico;strategic partnership,medium,Accordo commerciale o tecnologico
+t005,Piano Industriale,piano industriale;industrial plan;strategic plan,high,Pubblicazione di piano industriale
+t006,Ristrutturazione,ristrutturazione;restructuring;riorganizzazione,medium,Riorganizzazione aziendale
+t007,Profit Warning,profit warning;guidance negativa;allarme profitti,high,Avviso di peggioramento dei profitti
+t008,Apertura Stabilimento,nuovo stabilimento;plant opening;apre un impianto,medium,Apertura di impianto produttivo
+t009,Regulatory Issue,indagine antitrust;regulatory issue;sanzione regolatoria,high,Problemi regolatori o sanzioni

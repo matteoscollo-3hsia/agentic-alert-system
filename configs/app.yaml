@@ -1,0 +1,8 @@
+paths:
+  companies_csv: data/companies.csv
+  triggers_csv: data/triggers.csv
+  providers_csv: data/providers.csv
+  alerts_csv: data/alerts.csv
+alerts:
+  channel: tbd
+  enabled: false

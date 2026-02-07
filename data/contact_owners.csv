@@ -1,0 +1,11 @@
+owner_id,owner_name,owner_email,owner_org,owner_relationship_strength,notes
+o001,Laura Bianchi,laura.bianchi@teha.it,TEHA,high,Board advisor for tech accounts
+o002,Marco De Luca,marco.deluca@advisor.com,Advisor,medium,Former CFO contact
+o003,Elisa Conti,elisa.conti@internal.example.com,Internal,high,Food sector sponsor
+o004,Tomas Fischer,tomas.fischer@advisor.com,Advisor,low,Occasional intro
+o005,Marie Dubois,marie.dubois@internal.example.com,Internal,medium,Healthcare lead
+o006,Javier Ruiz,javier.ruiz@teha.it,TEHA,high,Logistics network access
+o007,Sofia Rossi,sofia.rossi@internal.example.com,Internal,medium,Fintech partnership owner
+o008,Lukas Meyer,lukas.meyer@advisor.com,Advisor,low,Manufacturing coverage
+o009,Annika Saar,annika.saar@internal.example.com,Internal,high,Baltics cloud contacts
+o010,Erik Lind,erik.lind@teha.it,TEHA,medium,Renewables advisor

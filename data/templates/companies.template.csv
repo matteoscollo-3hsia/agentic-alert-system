@@ -1,0 +1,11 @@
+company_id,name,aliases,revenue_eur,industry_code,industry_description,website,website_domain,country,contact_owner,status
+c001,Futura Tech,FuturaTech;Futura Tech SpA,250000000,0000,Tech,https://www.futuratech.it,futuratech.it,IT,contact@futuratech.it,active
+c002,NordWind Energy,NordWind;NordWind Energy SpA,180000000,0000,Energy,https://www.nordwind.it,nordwind.it,IT,contact@nordwind.it,active
+c003,GreenLeaf Foods,GreenLeaf;GreenLeaf Foods Italia,95000000,0000,Consumer,https://www.greenleaf.it,greenleaf.it,IT,info@greenleaf.it,active
+c004,Alpine Robotics,AlpineRobotics;Alpine Robotics Italia,120000000,0000,Industrial,https://www.alpinerobotics.it,alpinerobotics.it,IT,press@alpinerobotics.it,active
+c005,MedNova Health,MedNova;MedNova Health Italia,210000000,0000,Healthcare,https://www.mednova.it,mednova.it,IT,media@mednova.it,active
+c006,Iberia Logistics,Iberia Logistics Italia;IberiaLogistics,130000000,0000,Logistics,https://www.iberialogistics.it,iberialogistics.it,IT,info@iberialogistics.it,active
+c007,Atlas Software,Atlas Software Italia;AtlasSoft,160000000,0000,Software,https://www.atlassoftware.it,atlassoftware.it,IT,hello@atlassoftware.it,active
+c008,Luminex Materials,Luminex;Luminex Materials Italia,70000000,0000,Materials,https://www.luminex.it,luminex.it,IT,contatti@luminex.it,active
+c009,BalticCloud,BalticCloud Italia;Baltic Cloud,60000000,0000,Services,https://www.balticcloud.it,balticcloud.it,IT,info@balticcloud.it,active
+c010,TerraGrid Renewables,TerraGrid;TerraGrid Renewables Italia,140000000,0000,Energy,https://www.terragrid.it,terragrid.it,IT,press@terragrid.it,active

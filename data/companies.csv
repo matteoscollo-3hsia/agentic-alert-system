@@ -1,0 +1,51 @@
+company_id,name,aliases,revenue_eur,industry_code,industry_description,website,website_domain,country,contact_owner,status
+c001,Futura Tech,Futura Tech;Futura Tech S.p.A.,39000000,0000,Manufacturing,https://www.futuratech.it,futuratech.it,IT,press@futuratech.it,active
+c002,NordWind Energy,NordWind Energy;NordWind Energy Italia,58000000,0000,Industrial,https://www.nordwindenergy.it,nordwindenergy.it,IT,info@nordwindenergy.it,active
+c003,GreenLeaf Foods,GreenLeaf Foods;GreenLeaf Foods SRL;GreenLeaf Foods Italia,77000000,0000,Services,https://www.greenleaffoods.it,greenleaffoods.it,IT,press@greenleaffoods.it,active
+c004,Alpine Robotics,Alpine Robotics;Alpine Robotics S.p.A.,96000000,0000,Consumer,https://www.alpinerobotics.it,alpinerobotics.it,IT,info@alpinerobotics.it,active
+c005,MedNova Health,MedNova Health;MedNova Health Italia,115000000,0000,Energy,https://www.mednovahealth.it,mednovahealth.it,IT,press@mednovahealth.it,active
+c006,Iberia Logistics,Iberia Logistics;Iberia Logistics SRL;Iberia Logistics Italia,134000000,0000,Tech,https://www.iberialogistics.it,iberialogistics.it,IT,info@iberialogistics.it,active
+c007,Atlas Software,Atlas Software;Atlas Software S.p.A.,153000000,0000,Healthcare,https://www.atlassoftware.it,atlassoftware.it,IT,press@atlassoftware.it,active
+c008,Luminex Materials,Luminex Materials;Luminex Materials Italia,172000000,0000,Logistics,https://www.luminexmaterials.it,luminexmaterials.it,IT,info@luminexmaterials.it,active
+c009,BalticCloud,BalticCloud;BalticCloud SRL;BalticCloud Italia,191000000,0000,Materials,https://www.balticcloud.it,balticcloud.it,IT,press@balticcloud.it,active
+c010,TerraGrid Renewables,TerraGrid Renewables;TerraGrid Renewables S.p.A.,210000000,0000,Manufacturing,https://www.terragridrenewables.it,terragridrenewables.it,IT,info@terragridrenewables.it,active
+c011,Aurora Manufacturing,Aurora Manufacturing;Aurora Manufacturing Italia,229000000,0000,Industrial,https://www.auroramanufacturing.it,auroramanufacturing.it,IT,press@auroramanufacturing.it,active
+c012,Civita Services,Civita Services;Civita Services SRL;Civita Services Italia,248000000,0000,Services,https://www.civitaservices.it,civitaservices.it,IT,info@civitaservices.it,active
+c013,Valora Industrial,Valora Industrial;Valora Industrial S.p.A.,267000000,0000,Consumer,https://www.valoraindustrial.it,valoraindustrial.it,IT,press@valoraindustrial.it,active
+c014,Siena Consumer,Siena Consumer;Siena Consumer Italia,286000000,0000,Energy,https://www.sienaconsumer.it,sienaconsumer.it,IT,info@sienaconsumer.it,active
+c015,Rinova Energy,Rinova Energy;Rinova Energy SRL;Rinova Energy Italia,305000000,0000,Tech,https://www.rinovaenergy.it,rinovaenergy.it,IT,press@rinovaenergy.it,active
+c016,Orione Tech,Orione Tech;Orione Tech S.p.A.,324000000,0000,Healthcare,https://www.orionetech.it,orionetech.it,IT,info@orionetech.it,active
+c017,Salus Healthcare,Salus Healthcare;Salus Healthcare Italia,343000000,0000,Logistics,https://www.salushealthcare.it,salushealthcare.it,IT,press@salushealthcare.it,active
+c018,Veloce Logistics,Veloce Logistics;Veloce Logistics SRL;Veloce Logistics Italia,362000000,0000,Materials,https://www.velocelogistics.it,velocelogistics.it,IT,info@velocelogistics.it,active
+c019,Pietra Materials,Pietra Materials;Pietra Materials S.p.A.,381000000,0000,Manufacturing,https://www.pietramaterials.it,pietramaterials.it,IT,press@pietramaterials.it,active
+c020,NovaLinea Services,NovaLinea Services;NovaLinea Services Italia,400000000,0000,Industrial,https://www.novalineaservices.it,novalineaservices.it,IT,info@novalineaservices.it,active
+c021,Aquila Manufacturing,Aquila Manufacturing;Aquila Manufacturing SRL;Aquila Manufacturing Italia,419000000,0000,Services,https://www.aquilamanufacturing.it,aquilamanufacturing.it,IT,press@aquilamanufacturing.it,active
+c022,Mercurio Industrial,Mercurio Industrial;Mercurio Industrial S.p.A.,438000000,0000,Consumer,https://www.mercurioindustrial.it,mercurioindustrial.it,IT,info@mercurioindustrial.it,active
+c023,LineaVerde Consumer,LineaVerde Consumer;LineaVerde Consumer Italia,457000000,0000,Energy,https://www.lineaverdeconsumer.it,lineaverdeconsumer.it,IT,press@lineaverdeconsumer.it,active
+c024,Etruria Energy,Etruria Energy;Etruria Energy SRL;Etruria Energy Italia,476000000,0000,Tech,https://www.etruriaenergy.it,etruriaenergy.it,IT,info@etruriaenergy.it,active
+c025,Polaris Tech,Polaris Tech;Polaris Tech S.p.A.,495000000,0000,Healthcare,https://www.polaristech.it,polaristech.it,IT,press@polaristech.it,active
+c026,Artemis Healthcare,Artemis Healthcare;Artemis Healthcare Italia,514000000,0000,Logistics,https://www.artemishealthcare.it,artemishealthcare.it,IT,info@artemishealthcare.it,active
+c027,CargoPlus Logistics,CargoPlus Logistics;CargoPlus Logistics SRL;CargoPlus Logistics Italia,533000000,0000,Materials,https://www.cargopluslogistics.it,cargopluslogistics.it,IT,press@cargopluslogistics.it,active
+c028,Marmo Materials,Marmo Materials;Marmo Materials S.p.A.,552000000,0000,Manufacturing,https://www.marmomaterials.it,marmomaterials.it,IT,info@marmomaterials.it,active
+c029,ServiTech Services,ServiTech Services;ServiTech Services Italia,571000000,0000,Industrial,https://www.servitechservices.it,servitechservices.it,IT,press@servitechservices.it,active
+c030,Dynamo Manufacturing,Dynamo Manufacturing;Dynamo Manufacturing SRL;Dynamo Manufacturing Italia,590000000,0000,Services,https://www.dynamomanufacturing.it,dynamomanufacturing.it,IT,info@dynamomanufacturing.it,active
+c031,ItalSteel Industrial,ItalSteel Industrial;ItalSteel Industrial S.p.A.,609000000,0000,Consumer,https://www.italsteelindustrial.it,italsteelindustrial.it,IT,press@italsteelindustrial.it,active
+c032,CasaViva Consumer,CasaViva Consumer;CasaViva Consumer Italia,628000000,0000,Energy,https://www.casavivaconsumer.it,casavivaconsumer.it,IT,info@casavivaconsumer.it,active
+c033,LucePura Energy,LucePura Energy;LucePura Energy SRL;LucePura Energy Italia,647000000,0000,Tech,https://www.lucepuraenergy.it,lucepuraenergy.it,IT,press@lucepuraenergy.it,active
+c034,Nexa Tech,Nexa Tech;Nexa Tech S.p.A.,666000000,0000,Healthcare,https://www.nexatech.it,nexatech.it,IT,info@nexatech.it,active
+c035,VitaCare Healthcare,VitaCare Healthcare;VitaCare Healthcare Italia,685000000,0000,Logistics,https://www.vitacarehealthcare.it,vitacarehealthcare.it,IT,press@vitacarehealthcare.it,active
+c036,LogiNord Logistics,LogiNord Logistics;LogiNord Logistics SRL;LogiNord Logistics Italia,704000000,0000,Materials,https://www.loginordlogistics.it,loginordlogistics.it,IT,info@loginordlogistics.it,active
+c037,Mineralix Materials,Mineralix Materials;Mineralix Materials S.p.A.,723000000,0000,Manufacturing,https://www.mineralixmaterials.it,mineralixmaterials.it,IT,press@mineralixmaterials.it,active
+c038,Sigma Services,Sigma Services;Sigma Services Italia,742000000,0000,Industrial,https://www.sigmaservices.it,sigmaservices.it,IT,info@sigmaservices.it,active
+c039,Omega Manufacturing,Omega Manufacturing;Omega Manufacturing SRL;Omega Manufacturing Italia,761000000,0000,Services,https://www.omegamanufacturing.it,omegamanufacturing.it,IT,press@omegamanufacturing.it,active
+c040,Trieste Industrial,Trieste Industrial;Trieste Industrial S.p.A.,780000000,0000,Consumer,https://www.triesteindustrial.it,triesteindustrial.it,IT,info@triesteindustrial.it,active
+c041,DolceCasa Consumer,DolceCasa Consumer;DolceCasa Consumer Italia,799000000,0000,Energy,https://www.dolcecasaconsumer.it,dolcecasaconsumer.it,IT,press@dolcecasaconsumer.it,active
+c042,Solaris Energy,Solaris Energy;Solaris Energy SRL;Solaris Energy Italia,818000000,0000,Tech,https://www.solarisenergy.it,solarisenergy.it,IT,info@solarisenergy.it,active
+c043,PixelWave Tech,PixelWave Tech;PixelWave Tech S.p.A.,837000000,0000,Healthcare,https://www.pixelwavetech.it,pixelwavetech.it,IT,press@pixelwavetech.it,active
+c044,BioMedica Healthcare,BioMedica Healthcare;BioMedica Healthcare Italia,856000000,0000,Logistics,https://www.biomedicahealthcare.it,biomedicahealthcare.it,IT,info@biomedicahealthcare.it,active
+c045,Porto Logistics,Porto Logistics;Porto Logistics SRL;Porto Logistics Italia,875000000,0000,Materials,https://www.portologistics.it,portologistics.it,IT,press@portologistics.it,active
+c046,Granito Materials,Granito Materials;Granito Materials S.p.A.,894000000,0000,Manufacturing,https://www.granitomaterials.it,granitomaterials.it,IT,info@granitomaterials.it,active
+c047,Crescendo Services,Crescendo Services;Crescendo Services Italia,913000000,0000,Industrial,https://www.crescendoservices.it,crescendoservices.it,IT,press@crescendoservices.it,active
+c048,Meccanica Italia,Meccanica Italia;Meccanica Italia SRL;Meccanica Italia Italia,932000000,0000,Services,https://www.meccanicaitalia.it,meccanicaitalia.it,IT,info@meccanicaitalia.it,active
+c049,Industria Nova,Industria Nova;Industria Nova S.p.A.,951000000,0000,Consumer,https://www.industrianova.it,industrianova.it,IT,press@industrianova.it,active
+c050,LineaBlu Consumer,LineaBlu Consumer;LineaBlu Consumer Italia,970000000,0000,Energy,https://www.lineabluconsumer.it,lineabluconsumer.it,IT,info@lineabluconsumer.it,active
