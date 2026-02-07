@@ -6,6 +6,7 @@ Documento di validazione manuale per il workflow **Daily Pipeline** con due run 
 - Branch repo: `main`
 - Secret `SLACK_WEBHOOK_URL` presente: **[YES/NO]**
 - Workflow: **Daily Pipeline**
+- Providers: run live di default; `Local RSS Snapshot` solo test/offline.
 
 ## 2) Procedura (UI)
 1. Apri GitHub → **Actions** → **Daily Pipeline**.

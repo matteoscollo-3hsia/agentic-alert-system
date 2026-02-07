@@ -32,6 +32,13 @@ def test_pipeline_generates_alerts_no_dupes(
     repo_root = Path(__file__).resolve().parents[2]
     _copy_data_files(repo_root, tmp_path)
 
+    (tmp_path / "providers.csv").write_text(
+        "provider_id,name,type,base_url,enabled\n"
+        "rss_snapshot,Local RSS Snapshot,rss_file,"
+        "file://data/rss_snapshots/sample.xml,true\n",
+        encoding="utf-8",
+    )
+
     monkeypatch.setenv("COMPANIES_CSV", str(tmp_path / "companies.csv"))
     monkeypatch.setenv("TRIGGERS_CSV", str(tmp_path / "triggers.csv"))
     monkeypatch.setenv("PROVIDERS_CSV", str(tmp_path / "providers.csv"))

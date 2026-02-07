@@ -1,5 +1,8 @@
 Questo file è la source of truth: ogni nuova entrypoint/command introdotto deve aggiornare questo documento.
 
+## Su Github: repositories > actions > daily pipeline > run workflow. Per startarlo Manualmente
+## Repository > Setting > Secrets & Variables > New Secret > inserire webhook
+
 | Command | Descrizione | Output atteso | Note |
 | --- | --- | --- | --- |
 | `uv sync` | Sincronizza l'ambiente e installa le dipendenze. | Pacchetti installati/sincronizzati con log di `uv`. | Necessario prima di eseguire pipeline o test. |
@@ -26,3 +29,4 @@ Per scheduling locale vedi `docs/30_scheduler_local.md`.
 4. Artifact/log: nella pagina del run trovi l'artifact `daily_run_YYYY-MM-DD` con `logs/*` e `data/alerts.csv`.
 5. Nota schedule: GitHub usa UTC. Il workflow schedula `0 5 * * *` e `0 6 * * *` e salta i run fuori dalle 07:00 Europe/Rome.
 6. Validazione E2E manuale: vedi `docs/40_actions_e2e_validation.md`.
+7. Default live: Actions usa provider live; `Local RSS Snapshot` è solo test/offline.

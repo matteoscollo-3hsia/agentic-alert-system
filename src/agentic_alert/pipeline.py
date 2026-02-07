@@ -414,6 +414,16 @@ def run_daily() -> None:
 
 def _run_pipeline(config: AppConfig) -> None:
     is_backtest = config.backtest_enabled
+    if (
+        config.alerts_enabled
+        and config.alert_channel == "slack"
+        and not config.slack_webhook_url
+    ):
+        print(
+            "ERROR: ALERTS_ENABLED=true and ALERT_CHANNEL=slack, but "
+            "SLACK_WEBHOOK_URL is empty."
+        )
+        raise SystemExit(1)
     companies = load_companies(config.companies_csv)
     if is_backtest:
         companies = _filter_companies_by_ids(
