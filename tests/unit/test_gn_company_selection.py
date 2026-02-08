@@ -1,5 +1,4 @@
-import random
-from datetime import date
+from pathlib import Path
 
 from agentic_alert.models.schemas import Company
 from agentic_alert.sources import provider_registry as pr
@@ -21,58 +20,28 @@ def _company(company_id: str, revenue: str) -> Company:
     )
 
 
-def test_gn_company_selection_top_revenue() -> None:
+def test_gn_universe_top_revenue() -> None:
     companies = [
         _company("c001", "100"),
         _company("c002", "200"),
         _company("c003", "150"),
     ]
-    selected = pr._select_gn_companies(
-        companies,
-        cap=2,
-        mode="top_revenue",
-        seed="",
+    universe = pr._build_gn_universe(companies, universe_size=2)
+    assert [company.company_id for company in universe] == ["c002", "c003"]
+
+
+def test_gn_batch_wraps() -> None:
+    universe = [_company(f"c00{i}", str(i * 10)) for i in range(1, 6)]
+    selected, pointer_after = pr._select_gn_batch(
+        universe,
+        batch_size=2,
+        pointer=4,
     )
-    assert [company.company_id for company in selected] == ["c002", "c003"]
+    assert [company.company_id for company in selected] == ["c005", "c001"]
+    assert pointer_after == 1
 
 
-def test_gn_company_selection_random_seeded() -> None:
-    companies = [_company(f"c00{i}", str(i * 10)) for i in range(1, 6)]
-    seed = "2026-02-07"
-    seed_int = date.fromisoformat(seed).toordinal()
-    ordered = sorted(companies, key=lambda company: company.company_id)
-    rng = random.Random(seed_int)
-    rng.shuffle(ordered)
-    expected = [company.company_id for company in ordered[:2]]
-
-    selected = pr._select_gn_companies(
-        companies,
-        cap=2,
-        mode="random",
-        seed=seed,
-    )
-
-    assert [company.company_id for company in selected] == expected
-
-
-def test_gn_company_selection_rolling() -> None:
-    companies = [_company(f"c00{i}", str(i * 10)) for i in range(1, 6)]
-    seed = "2026-02-07"
-    seed_int = date.fromisoformat(seed).toordinal()
-    ordered = sorted(companies, key=lambda company: company.company_id)
-    start = seed_int % len(ordered)
-    cap = 2
-    expected = ordered[start : start + cap]
-    if len(expected) < cap:
-        expected = expected + ordered[: cap - len(expected)]
-
-    selected = pr._select_gn_companies(
-        companies,
-        cap=cap,
-        mode="rolling",
-        seed=seed,
-    )
-
-    assert [company.company_id for company in selected] == [
-        company.company_id for company in expected
-    ]
+def test_gn_rotation_state_roundtrip(tmp_path: Path) -> None:
+    path = tmp_path / "gn_rotation_state.json"
+    pr._save_rotation_pointer(path, 7)
+    assert pr._load_rotation_pointer(path) == 7

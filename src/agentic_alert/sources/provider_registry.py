@@ -2,14 +2,13 @@ import calendar
 import hashlib
 import json
 import os
-import random
 import socket
 import ssl
 import time
 import urllib.error
 import urllib.request
 import urllib.parse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import certifi
@@ -190,26 +189,78 @@ def _gn_company_candidates(companies: list[Company]) -> list[Company]:
     return candidates
 
 
-def _gn_company_feeds_cap() -> int:
-    value = os.getenv("GN_COMPANY_FEEDS_CAP")
+def _gn_company_universe_size() -> int:
+    value = os.getenv("GN_COMPANY_UNIVERSE_SIZE")
     if not value:
         return 50
     try:
-        cap = int(value)
+        size = int(value)
     except ValueError:
         return 50
-    return max(cap, 0)
+    return max(size, 0)
 
 
-def _gn_company_feeds_mode() -> str:
-    value = os.getenv("GN_COMPANY_FEEDS_MODE", "top_revenue").strip().lower()
-    if value in {"top_revenue", "random", "rolling"}:
-        return value
-    return "top_revenue"
+def _gn_company_daily_batch() -> int:
+    value = os.getenv("GN_COMPANY_DAILY_BATCH")
+    if not value:
+        return 50
+    try:
+        size = int(value)
+    except ValueError:
+        return 50
+    return max(size, 0)
 
 
-def _gn_company_feeds_seed() -> str:
-    return os.getenv("GN_COMPANY_FEEDS_SEED", "").strip()
+def _gn_recency_hours() -> int | None:
+    value = os.getenv("GN_RECENCY_HOURS")
+    if not value:
+        return None
+    try:
+        hours = int(value)
+    except ValueError:
+        return None
+    if hours <= 0:
+        return None
+    return hours
+
+
+def _gn_max_items_per_feed() -> int:
+    value = os.getenv("GN_MAX_ITEMS_PER_FEED")
+    if not value:
+        return 0
+    try:
+        size = int(value)
+    except ValueError:
+        return 0
+    return max(size, 0)
+
+
+def _gn_rotation_state_path() -> Path:
+    value = os.getenv("GN_ROTATION_STATE_PATH")
+    return Path(value) if value else Path("data/gn_rotation_state.json")
+
+
+def _load_rotation_pointer(path: Path) -> int:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return 0
+    except Exception:
+        return 0
+    if isinstance(payload, dict):
+        pointer = payload.get("pointer")
+        if isinstance(pointer, int) and pointer >= 0:
+            return pointer
+    return 0
+
+
+def _save_rotation_pointer(path: Path, pointer: int) -> None:
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        payload = {"pointer": max(pointer, 0)}
+        path.write_text(json.dumps(payload), encoding="utf-8")
+    except Exception as exc:  # noqa: BLE001 - log and continue
+        print(f"GN rotation state write failed: {exc}")
 
 
 def _parse_revenue_value(value: str) -> float:
@@ -222,90 +273,79 @@ def _parse_revenue_value(value: str) -> float:
         return 0.0
 
 
-def _seed_to_int(seed: str) -> int:
-    if not seed:
-        return 0
-    value = seed.strip()
-    if not value:
-        return 0
-    if len(value) >= 10:
-        try:
-            parsed = datetime.fromisoformat(value[:10])
-            return parsed.date().toordinal()
-        except ValueError:
-            pass
-    try:
-        return int(value)
-    except ValueError:
-        pass
-    digest = hashlib.sha256(value.encode("utf-8")).hexdigest()
-    return int(digest[:16], 16)
-
-
-def _rolling_window(
-    items: list[Company],
-    cap: int,
-    start: int,
-) -> list[Company]:
-    if cap >= len(items):
-        return items
-    end = start + cap
-    if end <= len(items):
-        return items[start:end]
-    return items[start:] + items[: end - len(items)]
-
-
-def _select_top_revenue(
+def _build_gn_universe(
     companies: list[Company],
-    cap: int,
+    universe_size: int,
 ) -> list[Company]:
+    if universe_size <= 0:
+        return []
     ordered = sorted(companies, key=lambda company: company.company_id or "")
     ordered = sorted(
         ordered,
         key=lambda company: _parse_revenue_value(company.revenue_eur),
         reverse=True,
     )
-    return ordered[:cap]
+    return ordered[:universe_size]
 
 
-def _select_random(
-    companies: list[Company],
-    cap: int,
-    seed: str,
+def _rolling_window(
+    items: list[Company],
+    batch_size: int,
+    start: int,
 ) -> list[Company]:
-    ordered = sorted(companies, key=lambda company: company.company_id or "")
-    rng = random.Random(_seed_to_int(seed))
-    rng.shuffle(ordered)
-    return ordered[:cap]
+    if batch_size >= len(items):
+        return items
+    end = start + batch_size
+    if end <= len(items):
+        return items[start:end]
+    return items[start:] + items[: end - len(items)]
 
 
-def _select_rolling(
-    companies: list[Company],
-    cap: int,
-    seed: str,
-) -> list[Company]:
-    ordered = sorted(companies, key=lambda company: company.company_id or "")
-    if not ordered:
-        return []
-    if cap >= len(ordered):
-        return ordered
-    start = _seed_to_int(seed) % len(ordered)
-    return _rolling_window(ordered, cap, start)
+def _normalize_pointer(pointer: int, size: int) -> int:
+    if size <= 0:
+        return 0
+    if pointer < 0:
+        return 0
+    return pointer % size
 
 
-def _select_gn_companies(
-    companies: list[Company],
-    cap: int,
-    mode: str,
-    seed: str,
-) -> list[Company]:
-    if cap <= 0 or not companies:
-        return []
-    if mode == "random":
-        return _select_random(companies, cap, seed)
-    if mode == "rolling":
-        return _select_rolling(companies, cap, seed)
-    return _select_top_revenue(companies, cap)
+def _select_gn_batch(
+    universe: list[Company],
+    batch_size: int,
+    pointer: int,
+) -> tuple[list[Company], int]:
+    size = len(universe)
+    if size == 0 or batch_size <= 0:
+        return [], _normalize_pointer(pointer, size)
+    normalized = _normalize_pointer(pointer, size)
+    step = min(batch_size, size)
+    selection = _rolling_window(universe, step, normalized)
+    pointer_after = (normalized + step) % size
+    return selection, pointer_after
+
+
+def _filter_entries_by_recency(
+    entries: list[feedparser.FeedParserDict],
+    hours: int,
+) -> list[feedparser.FeedParserDict]:
+    if hours <= 0:
+        return entries
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    filtered: list[feedparser.FeedParserDict] = []
+    for entry in entries:
+        published_at = _published_at(entry)
+        try:
+            parsed = datetime.fromisoformat(_normalize_timestamp(published_at))
+        except ValueError:
+            filtered.append(entry)
+            continue
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        else:
+            parsed = parsed.astimezone(timezone.utc)
+        if parsed >= cutoff:
+            filtered.append(entry)
+    return filtered
 
 
 def _load_gn_company(
@@ -315,12 +355,25 @@ def _load_gn_company(
     if companies is None:
         companies = _load_companies_from_csv(_companies_csv_path())
     candidates = _gn_company_candidates(companies)
-    cap = _gn_company_feeds_cap()
-    mode = _gn_company_feeds_mode()
-    seed = _gn_company_feeds_seed()
-    companies = _select_gn_companies(candidates, cap, mode, seed)
-    seed_label = seed if seed else "n/a"
-    skipped = max(len(candidates) - len(companies), 0)
+    universe_size = _gn_company_universe_size()
+    batch_size = _gn_company_daily_batch()
+    if os.getenv("GITHUB_ACTIONS") == "true" and os.getenv("GN_MODE") == "rotation_sla":
+        if batch_size <= 0:
+            raise RuntimeError(
+                "GN SLA misconfig: GN_COMPANY_DAILY_BATCH must be > 0 in Actions."
+            )
+        if universe_size < 1000:
+            raise RuntimeError(
+                "GN SLA misconfig: GN_COMPANY_UNIVERSE_SIZE must be >= 1000 in Actions."
+            )
+    universe = _build_gn_universe(candidates, universe_size)
+    state_path = _gn_rotation_state_path()
+    pointer_before = _load_rotation_pointer(state_path)
+    companies, pointer_after = _select_gn_batch(
+        universe, batch_size, pointer_before
+    )
+    _save_rotation_pointer(state_path, pointer_after)
+    skipped = max(len(universe) - len(companies), 0)
     if _is_gn_provider(provider) and not _rss_diagnostics_enabled():
         print(f"GN SSL CA bundle: {_ca_bundle_path()}")
     if _rss_diagnostics_enabled():
@@ -332,8 +385,17 @@ def _load_gn_company(
                 break
         _fetch_rss_with_diagnostics(provider, sample_url)
     print(
+        "GN company universe: "
+        f"size={len(universe)} (cap={universe_size})"
+    )
+    print(
+        "GN company batch: "
+        f"size={len(companies)} (requested={batch_size}) "
+        f"pointer={pointer_before}->{pointer_after}"
+    )
+    print(
         "GN company feeds processed: "
-        f"{len(companies)} (cap={cap} mode={mode} seed={seed_label})"
+        f"{len(companies)} (batch={batch_size})"
     )
     print(f"GN company feeds skipped: {skipped}")
 
@@ -351,6 +413,12 @@ def _load_gn_company(
             print(f"GN company feed failed for {company_id}: {reason}")
             continue
         entries = getattr(feed, "entries", []) or []
+        max_items = _gn_max_items_per_feed()
+        if max_items > 0:
+            entries = entries[:max_items]
+        recency_hours = _gn_recency_hours()
+        if recency_hours:
+            entries = _filter_entries_by_recency(entries, recency_hours)
         items.extend(
             _entries_to_items_for_company(provider, company_id, entries)
         )

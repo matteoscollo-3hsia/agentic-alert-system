@@ -138,7 +138,7 @@ def test_fetch_news_https_uses_certifi_bundle(monkeypatch) -> None:
     assert captured["parse_arg"] == b"<rss></rss>"
 
 
-def test_fetch_news_gn_company_builds_query(monkeypatch) -> None:
+def test_fetch_news_gn_company_builds_query(monkeypatch, tmp_path) -> None:
     provider = Provider(
         provider_id="p996",
         name="Google News Company-Scoped (IT)",
@@ -168,6 +168,10 @@ def test_fetch_news_gn_company_builds_query(monkeypatch) -> None:
 
     monkeypatch.setattr(provider_registry, "_parse_rss_from_url", _fake_parse)
     monkeypatch.setattr(provider_registry.time, "sleep", lambda _s: None)
+    monkeypatch.setenv(
+        "GN_ROTATION_STATE_PATH",
+        str(tmp_path / "gn_rotation_state.json"),
+    )
 
     fetch_news(provider, Path("data/articles.csv"))
 

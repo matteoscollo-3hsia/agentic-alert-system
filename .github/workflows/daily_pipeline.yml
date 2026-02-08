@@ -22,8 +22,11 @@ jobs:
       ALERTS_ENABLED: "true"
       ALERT_CHANNEL: "slack"
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      GN_COMPANY_FEEDS_CAP: "200"
-      GN_COMPANY_FEEDS_MODE: "top_revenue"
+      GN_COMPANY_UNIVERSE_SIZE: "4000"
+      GN_COMPANY_DAILY_BATCH: "1050"
+      GN_RECENCY_HOURS: "96"
+      GN_MAX_ITEMS_PER_FEED: "25"
+      GN_MODE: "rotation_sla"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,14 +53,13 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v3
 
-      - name: Select providers CSV and GN seed
+      - name: Select providers CSV
         run: |
           if [ -f data_private/providers.csv ]; then
             echo "PROVIDERS_CSV=data_private/providers.csv" >> "$GITHUB_ENV"
           else
             echo "PROVIDERS_CSV=data/providers.csv" >> "$GITHUB_ENV"
           fi
-          echo "GN_COMPANY_FEEDS_SEED=$(TZ=Europe/Rome date +%Y-%m-%d)" >> "$GITHUB_ENV"
 
       - name: Guard against Local RSS Snapshot in Actions
         run: |
@@ -95,16 +97,19 @@ jobs:
       - name: Run pipeline
         run: uv run python -m agentic_alert.pipeline
 
-      - name: Commit alerts.csv if changed
+      - name: Commit alerts.csv and GN rotation state if changed
         run: |
-          if ! git status --porcelain -- data/alerts.csv | grep -q .; then
-            echo "No alerts.csv changes to commit."
+          if ! git status --porcelain -- data/alerts.csv data/gn_rotation_state.json | grep -q .; then
+            echo "No alerts.csv or gn_rotation_state.json changes to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/alerts.csv
-          git commit -m "chore(alerts): update alerts.csv"
+          if [ -f data/gn_rotation_state.json ]; then
+            git add data/gn_rotation_state.json
+          fi
+          git commit -m "chore: update alerts and gn rotation state"
           git push
 
       - name: Build artifact name
@@ -118,4 +123,5 @@ jobs:
           path: |
             logs/*
             data/alerts.csv
+            data/gn_rotation_state.json
           if-no-files-found: warn
