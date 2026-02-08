@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: daily-pipeline
-  cancel-in-progress: true
+  group: daily_pipeline_main
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Dataset check (companies)
         run: |
@@ -97,20 +99,22 @@ jobs:
       - name: Run pipeline
         run: uv run python -m agentic_alert.pipeline
 
-      - name: Commit alerts.csv and GN rotation state if changed
+      - name: Commit alerts.csv if changed
         run: |
           if ! git status --porcelain -- data/alerts.csv data/gn_rotation_state.json | grep -q .; then
-            echo "No alerts.csv or gn_rotation_state.json changes to commit."
+            echo "No changes in alerts.csv or gn_rotation_state.json; skipping commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/alerts.csv
           if [ -f data/gn_rotation_state.json ]; then
             git add data/gn_rotation_state.json
           fi
-          git commit -m "chore: update alerts and gn rotation state"
-          git push
+          git commit -m "chore(alerts): update alerts.csv" || exit 0
+          git fetch origin main
+          git rebase origin/main || { git rebase --abort; echo "WARN: rebase failed (race). Skipping push."; exit 0; }
+          git push origin HEAD:main || { echo "WARN: push rejected (race). Skipping push; artifacts still uploaded."; exit 0; }
 
       - name: Build artifact name
         id: meta
