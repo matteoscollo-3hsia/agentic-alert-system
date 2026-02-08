@@ -1,0 +1,77 @@
+{
+  "_comment": "TODO: Replace this template with the real n8n export JSON from the UI if needed. Paste the exported workflow JSON here, replacing the entire file contents.",
+  "name": "Dispatch daily_pipeline (template)",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/matteoscollo-3hsia/agentic-alert-system/actions/workflows/daily_pipeline.yml/dispatches",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "jsonParameters": true,
+        "bodyParametersJson": "{\"ref\":\"main\"}",
+        "options": {
+          "fullResponse": true,
+          "responseFormat": "string"
+        }
+      },
+      "name": "Dispatch Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [520, 300],
+      "continueOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "name": "<GITHUB_PAT_CRED_NAME>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "<SLACK_CHANNEL>",
+        "text": "daily_pipeline dispatch: {{$node[\"Dispatch Workflow\"].json[\"statusCode\"] === 204 ? \"SUCCESS\" : \"FAILURE\"}}\nTimestamp: {{$now}}\nWorkflow: https://github.com/matteoscollo-3hsia/agentic-alert-system/actions/workflows/daily_pipeline.yml"
+      },
+      "name": "Slack Notify",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [820, 300],
+      "credentials": {
+        "slackApi": {
+          "name": "<SLACK_CRED_NAME>"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          { "node": "Dispatch Workflow", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Dispatch Workflow": {
+      "main": [
+        [
+          { "node": "Slack Notify", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  }
+}

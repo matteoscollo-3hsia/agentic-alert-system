@@ -11,3 +11,7 @@ data_private/
 logs/
 scripts/.env.local
 .cache/
+# n8n
+n8n/credentials/
+n8n/credentials*.json
+n8n/exports/credentials*.json
