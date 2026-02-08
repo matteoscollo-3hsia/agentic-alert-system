@@ -1,4 +1,5 @@
 Questo file è la source of truth: ogni nuova entrypoint/command introdotto deve aggiornare questo documento.
+Per workflow Codex e toolkit, vedi `AGENTS.md`.
 
 ## Su Github: repositories > actions > daily pipeline > run workflow. Per startarlo Manualmente
 ## Repository > Setting > Secrets & Variables > Actions > New Secret > inserire webhook
@@ -10,7 +11,7 @@ Questo file è la source of truth: ogni nuova entrypoint/command introdotto deve
 | `RSS_DIAGNOSTICS=true PROVIDERS_CSV=data_private/providers.csv uv run python -m agentic_alert.pipeline` | Esegue la pipeline con diagnostica RSS (una riga per provider). | Log con http_status, final_url, content_type, bytes, bozo, entries. | Utile per distinguere feed vuoto vs blocco/redirect/TLS. |
 | `python scripts/import_orbis_xlsx.py` | Importa `orbis_export.xlsx` in `data_private/companies.csv`. | Log con conteggi (rows_in, rows_written, missing_website, missing_revenue). | Usa `ORBIS_EXPORT_PATH` e `ORBIS_SHEET_NAME` se vuoi sovrascrivere path/sheet. |
 | `BACKTEST_ENABLED=true BACKTEST_LOOKBACK_DAYS=7 BACKTEST_COMPANY_IDS=c001,c002 BACKTEST_OUTPUT_CSV=data/alerts_backtest.csv PROVIDERS_CSV=data_private/providers.csv uv run python -m agentic_alert.pipeline` | Esegue un backtest storico (lookback giorni) e scrive su `alerts_backtest.csv`. | Log con numero alert generati + CSV backtest con `run_type=backtest`. | Per testare su 2-3 aziende usare `BACKTEST_COMPANY_IDS`. Slack resta off a meno di `ALERTS_ENABLED=true`. |
-| `python -c "from pathlib import Path; Path('data/alerts.csv').write_text('alert_id,company_id,company_name,trigger_id,trigger_name,contact_owner,source,article_url,published_at,dedupe_key,created_at,status\\n', encoding='utf-8')"` | Reset `alerts.csv` al solo header. | File `data/alerts.csv` ripulito. | Utile prima di validazioni end-to-end. |
+| `python -c "from pathlib import Path; Path('data/alerts.csv').write_text('alert_id,company_id,company_name,trigger_id,trigger_name,contact_owner,source,article_url,published_at,dedupe_key,created_at,status,owner_name,owner_source,owner_email\\n', encoding='utf-8')"` | Reset `alerts.csv` al solo header. | File `data/alerts.csv` ripulito. | Utile prima di validazioni end-to-end. |
 | `COMPANIES_CSV=data_private/companies.csv PROVIDERS_CSV=data_private/providers.csv TRIGGERS_CSV=data_private/triggers.csv uv run python -m agentic_alert.pipeline` | Run with real data (via env vars). | Log con numero alert generati e dettaglio alert. | Nessun dato reale nel repo. |
 | `./scripts/run_daily.sh` | Wrapper per eseguire la pipeline MVP. | Stesso output di `uv run python -m agentic_alert.pipeline`. | Richiede permessi di esecuzione sul file. |
 | `./scripts/run_daily_local.sh` | Esegue la pipeline con logging in `logs/`. | Log file in `logs/daily_run_YYYYMMDD.log`. | Consigliato per scheduling locale. |
