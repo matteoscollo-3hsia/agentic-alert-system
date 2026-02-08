@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+.n8n/
+postgres_data/
+n8n_data/
